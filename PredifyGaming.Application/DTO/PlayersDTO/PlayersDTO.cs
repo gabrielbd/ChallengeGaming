@@ -9,6 +9,5 @@ namespace PredifyGaming.Application.Commands.Players
     public class PlayersDTO
     {
         public string? Name { get; set; }
-        public long Points { get; set; }
     }
 }

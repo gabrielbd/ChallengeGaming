@@ -36,12 +36,6 @@ namespace PredifyGaming.Application.Services
             var result = await _domain.GetAllByPlayerAsync(idPlayer);
             return _mapper.Map<List<PlaysResultDTO>>(result);
         }
-        public override async Task<PlaysResult> CreateAsync(PlaysResultDTO entity)
-        {
-            var data = await _domain.CreateAsync(_mapper.Map<PlaysResult>(entity));
-            return data;
-        }
-
         public async Task<string> GameResultFormat(PlaysResult playsResult)
         {
             return await Task.Run(() =>
