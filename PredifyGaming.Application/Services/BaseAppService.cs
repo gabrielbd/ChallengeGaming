@@ -24,20 +24,24 @@ namespace PredifyGaming.Application.Services
            var data = await _domainService.CreateAsync(_mapper.Map<TEntity>(entity));
             return data;
         }
+
         public async Task<TEntity> UpdateAsync(TEntityDTO entity)
         {
             var data = await _domainService.UpdateAsync(_mapper.Map<TEntity>(entity));
             return data;
         }
+
         public async Task DeleteAsync(long id)
         {
             await _domainService.DeleteAsync(id);
         }
+
         public async Task<List<TEntity>> GetAllAsync()
         {
             var entity = await _domainService.GetAllAsync();
             return entity.ToList();
         }
+
         public async Task<TEntity> GetByIdAsync(long id)
         {
             var entity = await _domainService.GetByIdAsync(id);

@@ -15,7 +15,7 @@ namespace PredifyGaming.Domain.Validations
             RuleFor(u => u.Name)
             .NotEmpty()
             .Length(2, 150)
-            .WithMessage("Nome do jogo inválido");
+            .WithMessage("Nome do game inválido");
         }
     }
 }

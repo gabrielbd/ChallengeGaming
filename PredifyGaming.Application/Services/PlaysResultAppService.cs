@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using PredifyGaming.Application.Commands.Players;
 using PredifyGaming.Application.Commands.PlaysResult;
 using PredifyGaming.Application.Interfaces;
 using PredifyGaming.Domain.Entities;
 using PredifyGaming.Domain.Interfaces.Services;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,6 +37,12 @@ namespace PredifyGaming.Application.Services
         {
             var result = await _domain.GetAllByPlayerAsync(idPlayer);
             return _mapper.Map<List<PlaysResultDTO>>(result);
+        }
+
+        public override async Task<PlaysResult> CreateAsync(PlaysResultDTO entity)
+        {
+            var userData = _mapper.Map<PlaysResult>(entity);
+            return await _domain.CreateAsync(userData);
         }
         public async Task<string> GameResultFormat(PlaysResult playsResult)
         {

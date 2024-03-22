@@ -20,7 +20,7 @@ namespace PredifyGaming.Domain.Services
             return data;
         }
 
-        public virtual async Task<TEntity> UpdateAsync(TEntity entity)
+        public async Task<TEntity> UpdateAsync(TEntity entity)
         {
             var data = await _repository.UpdateAsync(entity);
             return data;       

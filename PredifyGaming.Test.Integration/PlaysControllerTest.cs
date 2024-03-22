@@ -15,12 +15,10 @@ namespace PredifyGaming.Test.Integration
         [Fact]
         public async Task TestCreatedPlays()
         {
-            var faker = new Faker("pt_BR");
-
             var dto = new PlaysResultDTO
             {
                 PlayerId = 1,
-                GameId = 1,
+                GameId = 2,
             };
 
             var content = new StringContent(JsonConvert.SerializeObject(dto),

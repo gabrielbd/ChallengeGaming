@@ -58,7 +58,7 @@ namespace PredifyGaming.Infra.Repositories
         public async Task DeleteAsync(long id)
         {
             var data = await _context.Set<TEntity>().FindAsync(id).AsTask();
-            _context.Remove(data ?? throw new Exception("ID not found"));
+            _context.Remove(data);
             await _context.SaveChangesAsync();
         }
     }

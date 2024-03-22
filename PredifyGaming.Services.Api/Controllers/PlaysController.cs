@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using PredifyGaming.Application.Commands.Players;
+﻿using Microsoft.AspNetCore.Mvc;
 using PredifyGaming.Application.Commands.PlaysResult;
 using PredifyGaming.Application.Interfaces;
 
@@ -10,11 +8,11 @@ namespace PredifyGaming.Services.Api.Controllers
     [ApiController]
     public class PlaysController : ControllerBase
     {
-        private readonly IPlaysResultAppService _playsAppService;
+        private readonly IPlaysResultAppService _playsResultAppService;
 
         public PlaysController(IPlaysResultAppService playsAppService)
         {
-            _playsAppService = playsAppService;
+            _playsResultAppService = playsAppService;
         }
 
         [HttpPost]
@@ -22,10 +20,10 @@ namespace PredifyGaming.Services.Api.Controllers
         {
             try
             {
-                var data = await _playsAppService.CreateAsync(dto);
-                var gameResult = await _playsAppService.GameResultFormat(data);
+                var data = await _playsResultAppService.CreateAsync(dto);
+                var gameplayResult = await _playsResultAppService.GameResultFormat(data);
 
-                return Ok(gameResult);
+                return Ok(gameplayResult);
             }
             catch (Exception ex)
             {
