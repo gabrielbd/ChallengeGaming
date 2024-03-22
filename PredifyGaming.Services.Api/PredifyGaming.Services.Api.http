@@ -1,0 +1,6 @@
+@PredifyGaming.Services.Api_HostAddress = http://localhost:5191
+
+GET {{PredifyGaming.Services.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
