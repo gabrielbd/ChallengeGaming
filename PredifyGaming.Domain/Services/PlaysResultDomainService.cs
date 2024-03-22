@@ -49,5 +49,10 @@ namespace PredifyGaming.Domain.Services
                 var data = await _repositoryPlays.CreateAsync(entity);
                 return data;
         }
+
+        public async Task<List<PlaysResult>> GetByPlayerIsGameAsync(long idPlayer, long idGame)
+        {
+            return await _repositoryPlays.GetByPlayerIsGameAsync(idPlayer, idGame);
+        }
     }
 }

@@ -13,5 +13,7 @@ namespace PredifyGaming.Application.Interfaces
         Task<List<PlaysResultDTO>> GetAllByGameAsync(long idGame);
         Task<List<PlaysResultDTO>> GetAllByPlayerAsync(long idPlayer);
         Task<string> GameResultFormat(PlaysResult gameResult);
+        Task<List<PlaysResultDTO>> GetByPlayerIsGameAsync(long idPlayer, long idGame);
+
     }
 }

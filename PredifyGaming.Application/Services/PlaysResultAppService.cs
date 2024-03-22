@@ -44,17 +44,30 @@ namespace PredifyGaming.Application.Services
             var userData = _mapper.Map<PlaysResult>(entity);
             return await _domain.CreateAsync(userData);
         }
+        
         public async Task<string> GameResultFormat(PlaysResult playsResult)
         {
+            var valueTotalPoints = await _domain.GetByPlayerIsGameAsync(playsResult.PlayerId, playsResult.GameId);
+            var totalPoints = valueTotalPoints.Sum(x => x.PointsResult);
+
             return await Task.Run(() =>
             {
                 var gameResult = 
                         ($"Jogada realizada com sucesso, resultado: {playsResult.PointsResult} pontos.{Environment.NewLine}" +
-                        $"- ID Player : {playsResult.PlayerId}{Environment.NewLine}" +
-                        $"- ID Game : {playsResult.GameId}{Environment.NewLine}" +
+                        $"- Pontos Acumulados        : {totalPoints}{Environment.NewLine}" +
+                        $"- Name do Player  : {playsResult.Players.Name}{Environment.NewLine}" +
+                        $"- Nome do Game    : {playsResult.Games.Name}{Environment.NewLine}" +
+                        $"- ID   do Player  : {playsResult.PlayerId} - {playsResult.Players.Name}{Environment.NewLine}" +
+                        $"- ID   do Game    : {playsResult.GameId}   - {playsResult.Games.Name}{Environment.NewLine}" +
                         $"- Sua jogada foi realizada : {playsResult.TimeStamp}");
                 return gameResult;
             });
+        }
+
+        public async Task<List<PlaysResultDTO>> GetByPlayerIsGameAsync(long idPlayer, long idGame)
+        {
+            var result = await _domain.GetByPlayerIsGameAsync(idPlayer,idGame);
+            return _mapper.Map<List<PlaysResultDTO>>(result);
         }
     }
 }

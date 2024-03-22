@@ -29,5 +29,12 @@ namespace PredifyGaming.Infra.Repositories
         {
             return _contexts.PlaysResult.Where(x => x.PlayerId == idPlayer).ToListAsync();
         }
+
+        public Task<List<PlaysResult>> GetByPlayerIsGameAsync(long idPlayer, long idGame)
+        {
+            return _contexts.PlaysResult
+                .Where(x => x.PlayerId == idPlayer && x.GameId == idGame)
+                .ToListAsync();
+        }
     }
 }
