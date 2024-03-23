@@ -9,6 +9,7 @@ builder.Services.AddSwaggerGen();
 DependencyInjector.Register(builder.Services);
 SetupIOC.AddEntityFrameworkServices(builder);
 SetupIOC.AddAutoMapperServicess(builder);
+SetupIOC.AddMongoDBServices(builder);
 
 var app = builder.Build();
 

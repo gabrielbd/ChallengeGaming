@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PredifyGaming.Test.Integrat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PredifyGaming.CrossCuting", "PredifyGaming.CrossCuting\PredifyGaming.CrossCuting.csproj", "{09759056-72C3-4236-8E57-0A9E02E7EE34}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PredifyGaming.Infra.Logs", "PredifyGaming.Infra.Logs\PredifyGaming.Infra.Logs.csproj", "{005A1B09-21DD-4484-8C27-E9B4E517A9CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{09759056-72C3-4236-8E57-0A9E02E7EE34}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09759056-72C3-4236-8E57-0A9E02E7EE34}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09759056-72C3-4236-8E57-0A9E02E7EE34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{005A1B09-21DD-4484-8C27-E9B4E517A9CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{005A1B09-21DD-4484-8C27-E9B4E517A9CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{005A1B09-21DD-4484-8C27-E9B4E517A9CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{005A1B09-21DD-4484-8C27-E9B4E517A9CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

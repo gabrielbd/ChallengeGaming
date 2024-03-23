@@ -1,30 +1,28 @@
 ﻿using AutoMapper;
-using PredifyGaming.Application.Commands.Players;
 using PredifyGaming.Application.Commands.PlaysResult;
 using PredifyGaming.Application.Interfaces;
 using PredifyGaming.Domain.Entities;
 using PredifyGaming.Domain.Interfaces.Services;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PredifyGaming.Infra.Logs.Interfaces;
+using PredifyGaming.Infra.Logs.Models;
+
 
 namespace PredifyGaming.Application.Services
 {
     public class PlaysResultAppService : BaseAppService<PlaysResult , PlaysResultDTO>, IPlaysResultAppService
     {
 
+        private readonly ILogPlaysResultPersistence _LogPlaysResult;
         private readonly IPlaysResultDomainService _domain;
         private readonly IMapper _mapper;
 
 
-        public PlaysResultAppService(IBaseDomainService<PlaysResult> domainService, IPlaysResultDomainService domain, IMapper mapper)
+        public PlaysResultAppService(IBaseDomainService<PlaysResult> domainService, IPlaysResultDomainService domain, IMapper mapper, ILogPlaysResultPersistence logPlaysResult)
             : base(domainService, mapper)
         {
             this._mapper = mapper;
             this._domain = domain;
+            _LogPlaysResult = logPlaysResult;
         }
 
         public async Task<List<PlaysResultDTO>> GetAllByGameAsync(long idGame)
@@ -42,7 +40,18 @@ namespace PredifyGaming.Application.Services
         public override async Task<PlaysResult> CreateAsync(PlaysResultDTO entity)
         {
             var userData = _mapper.Map<PlaysResult>(entity);
-            return await _domain.CreateAsync(userData);
+            var result = await _domain.CreateAsync(userData);
+
+            var logPlaysResultModel = new LogPlaysResultModel
+            {
+                PlayerId = result.PlayerId,
+                GameId = result.GameId,
+                TimeStamp = result.TimeStamp,
+                BalancePlayer = result.PointsResult
+            };
+            await _LogPlaysResult.CreateAsync(logPlaysResultModel);
+
+            return result;
         }
         
         public async Task<string> GameResultFormat(PlaysResult playsResult)
@@ -54,12 +63,12 @@ namespace PredifyGaming.Application.Services
             {
                 var gameResult = 
                         ($"Jogada realizada com sucesso, resultado: {playsResult.PointsResult} pontos.{Environment.NewLine}" +
-                        $"- Pontos Acumulados        : {totalPoints}{Environment.NewLine}" +
+                        $"- Pontos  Total   : {totalPoints}             {Environment.NewLine}" +
                         $"- Name do Player  : {playsResult.Players.Name}{Environment.NewLine}" +
-                        $"- Nome do Game    : {playsResult.Games.Name}{Environment.NewLine}" +
-                        $"- ID   do Player  : {playsResult.PlayerId} - {playsResult.Players.Name}{Environment.NewLine}" +
-                        $"- ID   do Game    : {playsResult.GameId}   - {playsResult.Games.Name}{Environment.NewLine}" +
-                        $"- Sua jogada foi realizada : {playsResult.TimeStamp}");
+                        $"- Nome do Game    : {playsResult.Games.Name}  {Environment.NewLine}" +
+                        $"- ID   do Player  : {playsResult.PlayerId}    {Environment.NewLine}" +
+                        $"- ID   do Game    : {playsResult.GameId}      {Environment.NewLine}" +
+                        $"- Data da Jogada  : {playsResult.TimeStamp}");
                 return gameResult;
             });
         }

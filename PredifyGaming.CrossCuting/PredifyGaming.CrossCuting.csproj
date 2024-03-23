@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\PredifyGaming.Application\PredifyGaming.Application.csproj" />
     <ProjectReference Include="..\PredifyGaming.Domain\PredifyGaming.Domain.csproj" />
+    <ProjectReference Include="..\PredifyGaming.Infra.Logs\PredifyGaming.Infra.Logs.csproj" />
     <ProjectReference Include="..\PredifyGaming.Infra\PredifyGaming.Infra.csproj" />
   </ItemGroup>
 
