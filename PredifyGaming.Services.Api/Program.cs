@@ -8,6 +8,7 @@ builder.Services.AddSwaggerGen();
 
 DependencyInjector.Register(builder.Services);
 SetupIOC.AddEntityFrameworkServices(builder);
+SetupIOC.AddMediatRServices(builder);
 SetupIOC.AddAutoMapperServicess(builder);
 SetupIOC.AddMongoDBServices(builder);
 

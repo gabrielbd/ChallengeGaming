@@ -11,12 +11,11 @@ namespace PredifyGaming.Domain.Services
 {
     public class GamesDomainService : BaseDomainService<Games> , IGamesDomainService
     {
-        private readonly IGamesRepository _repository;
-
-        public GamesDomainService(IGamesRepository repository)
-            :base(repository) 
+        private readonly IUnitOfWork<Games> _unitOfWork;
+        public GamesDomainService(IUnitOfWork<Games> unitOfWork)
+            : base(unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
     }
 }

@@ -16,11 +16,11 @@ namespace PredifyGaming.Services.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(PlaysResultDTO dto)
+        public async Task<IActionResult> Post(CreatePlayResultCommand command)
         {
             try
             {
-                var data = await _playsResultAppService.CreateAsync(dto);
+                var data = await _playsResultAppService.CreatePlayAsync(command);
                 var gameplayResult = await _playsResultAppService.GameResultFormat(data);
 
                 return Ok(gameplayResult);

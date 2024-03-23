@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using MediatR;
 using PredifyGaming.Application.Commands.PlaysResult;
 using PredifyGaming.Application.Interfaces;
+using PredifyGaming.Domain.DTO;
 using PredifyGaming.Domain.Entities;
 using PredifyGaming.Domain.Interfaces.Services;
 using PredifyGaming.Infra.Logs.Interfaces;
@@ -9,20 +11,20 @@ using PredifyGaming.Infra.Logs.Models;
 
 namespace PredifyGaming.Application.Services
 {
-    public class PlaysResultAppService : BaseAppService<PlaysResult , PlaysResultDTO>, IPlaysResultAppService
+    public class PlaysResultAppService : BaseAppService<PlaysResult>, IPlaysResultAppService
     {
 
-        private readonly ILogPlaysResultPersistence _LogPlaysResult;
         private readonly IPlaysResultDomainService _domain;
         private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
 
-        public PlaysResultAppService(IBaseDomainService<PlaysResult> domainService, IPlaysResultDomainService domain, IMapper mapper, ILogPlaysResultPersistence logPlaysResult)
+        public PlaysResultAppService(IBaseDomainService<PlaysResult> domainService, IPlaysResultDomainService domain, IMapper mapper, IMediator mediator)
             : base(domainService, mapper)
         {
             this._mapper = mapper;
             this._domain = domain;
-            _LogPlaysResult = logPlaysResult;
+            this._mediator = mediator;
         }
 
         public async Task<List<PlaysResultDTO>> GetAllByGameAsync(long idGame)
@@ -36,36 +38,26 @@ namespace PredifyGaming.Application.Services
             var result = await _domain.GetAllByPlayerAsync(idPlayer);
             return _mapper.Map<List<PlaysResultDTO>>(result);
         }
+  
 
-        public override async Task<PlaysResult> CreateAsync(PlaysResultDTO entity)
+        public async Task<List<PlaysResultDTO>> GetByPlayerIsGameAsync(long idPlayer, long idGame)
         {
-            var userData = _mapper.Map<PlaysResult>(entity);
-            var result = await _domain.CreateAsync(userData);
-
-            var logPlaysResultModel = new LogPlaysResultModel
-            {
-                PlayerId = result.PlayerId,
-                GameId = result.GameId,
-                TimeStamp = result.TimeStamp,
-                BalancePlayer = result.PointsResult
-            };
-            await _LogPlaysResult.CreateAsync(logPlaysResultModel);
-
-            return result;
+            var result = await _domain.GetByPlayerIsGameAsync(idPlayer,idGame);
+            return _mapper.Map<List<PlaysResultDTO>>(result);
         }
-        
-        public async Task<string> GameResultFormat(PlaysResult playsResult)
+
+        public async Task<string> GameResultFormat(PlaysResultDTO playsResult)
         {
             var valueTotalPoints = await _domain.GetByPlayerIsGameAsync(playsResult.PlayerId, playsResult.GameId);
             var totalPoints = valueTotalPoints.Sum(x => x.PointsResult);
 
             return await Task.Run(() =>
             {
-                var gameResult = 
+                var gameResult =
                         ($"Jogada realizada com sucesso, resultado: {playsResult.PointsResult} pontos.{Environment.NewLine}" +
                         $"- Pontos  Total   : {totalPoints}             {Environment.NewLine}" +
-                        $"- Name do Player  : {playsResult.Players.Name}{Environment.NewLine}" +
-                        $"- Nome do Game    : {playsResult.Games.Name}  {Environment.NewLine}" +
+                        $"- Name do Player  : {playsResult.PlayerName}  {Environment.NewLine}" +
+                        $"- Nome do Game    : {playsResult.GameName}    {Environment.NewLine}" +
                         $"- ID   do Player  : {playsResult.PlayerId}    {Environment.NewLine}" +
                         $"- ID   do Game    : {playsResult.GameId}      {Environment.NewLine}" +
                         $"- Data da Jogada  : {playsResult.TimeStamp}");
@@ -73,10 +65,10 @@ namespace PredifyGaming.Application.Services
             });
         }
 
-        public async Task<List<PlaysResultDTO>> GetByPlayerIsGameAsync(long idPlayer, long idGame)
+        public async Task<PlaysResultDTO> CreatePlayAsync(CreatePlayResultCommand command)
         {
-            var result = await _domain.GetByPlayerIsGameAsync(idPlayer,idGame);
-            return _mapper.Map<List<PlaysResultDTO>>(result);
+            var result = await _mediator.Send(command);
+            return result;
         }
     }
 }

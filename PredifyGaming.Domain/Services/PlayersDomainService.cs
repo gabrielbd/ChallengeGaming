@@ -11,12 +11,12 @@ namespace PredifyGaming.Domain.Services
 {
     public class PlayersDomainService : BaseDomainService<Players> , IPlayersDomainService
     {
-        private readonly IPlayersRepository _repository;
+        private readonly IUnitOfWork<Players> _unitOfWork;
 
-        public PlayersDomainService(IPlayersRepository repository)
-            : base(repository)
+        public PlayersDomainService(IUnitOfWork<Players> unitOfWork)
+            : base(unitOfWork)  
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
     }
 }

@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PredifyGaming.Application.Commands.Players
+namespace PredifyGaming.Domain.DTO
 {
-    public class PlayersDTO
+    public class GameDTO
     {
+        public long IdGame { get; set; }
         public string? Name { get; set; }
     }
 }

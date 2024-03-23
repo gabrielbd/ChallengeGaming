@@ -7,43 +7,43 @@ namespace PredifyGaming.Domain.Services
     public class BaseDomainService<TEntity> : IBaseDomainService<TEntity>
       where TEntity : class
     {
-        private readonly IBaseRepository<TEntity> _repository;
+        private readonly IUnitOfWork<TEntity> _unitOfWork;
 
-        public BaseDomainService(IBaseRepository<TEntity> repository)
+        public BaseDomainService(IUnitOfWork<TEntity> unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
 
         public virtual async Task<TEntity> CreateAsync(TEntity entity)
         {
-            var data = await _repository.CreateAsync(entity);
+            var data = await _unitOfWork.BaseRepository.CreateAsync(entity);
             return data;
         }
 
         public async Task<TEntity> UpdateAsync(TEntity entity)
         {
-            var data = await _repository.UpdateAsync(entity);
+            var data = await _unitOfWork.BaseRepository.UpdateAsync(entity);
             return data;       
         }
 
         public Task<List<TEntity>> GetAllAsync()
         {
-            return _repository.GetAllAsync();
+            return _unitOfWork.BaseRepository.GetAllAsync();
         }
 
         public Task<TEntity> GetByIdAsync(long id)
         {
-            return _repository.GetByIdAsync(id);
+            return _unitOfWork.BaseRepository.GetByIdAsync(id);
         }
 
         public async Task DeleteAsync(long id)
         {
-            await _repository.DeleteAsync(id);
+            await _unitOfWork.BaseRepository.DeleteAsync(id);
         }
 
         public void Dispose()
         {
-            _repository.Dispose();
+            _unitOfWork.Dispose();
         }
     }
 }

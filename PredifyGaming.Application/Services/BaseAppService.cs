@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MediatR;
 using PredifyGaming.Application.Interfaces;
 using PredifyGaming.Domain.Entities;
 using PredifyGaming.Domain.Interfaces.Services;
@@ -6,7 +7,7 @@ using PredifyGaming.Domain.Interfaces.Services;
 
 namespace PredifyGaming.Application.Services
 {
-    public class BaseAppService<TEntity, TEntityDTO> : IBaseAppService<TEntity, TEntityDTO> 
+    public class BaseAppService<TEntity> : IBaseAppService<TEntity> 
         where TEntity : class
     {
         private readonly IBaseDomainService<TEntity> _domainService;
@@ -19,15 +20,15 @@ namespace PredifyGaming.Application.Services
         }
 
 
-        public virtual async Task<TEntity> CreateAsync(TEntityDTO entity)
+        public async Task<TEntity> CreateAsync(TEntity entity)
         {
-           var data = await _domainService.CreateAsync(_mapper.Map<TEntity>(entity));
+           var data = await _domainService.CreateAsync(entity);
             return data;
         }
 
-        public async Task<TEntity> UpdateAsync(TEntityDTO entity)
+        public async Task<TEntity> UpdateAsync(TEntity entity)
         {
-            var data = await _domainService.UpdateAsync(_mapper.Map<TEntity>(entity));
+            var data = await _domainService.UpdateAsync(entity);
             return data;
         }
 

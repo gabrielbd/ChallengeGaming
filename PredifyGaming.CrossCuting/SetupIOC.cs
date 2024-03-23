@@ -7,6 +7,7 @@ using PredifyGaming.Infra.Logs.Contexts;
 using PredifyGaming.Infra.Logs.Interfaces;
 using PredifyGaming.Infra.Logs.Persistence;
 using PredifyGaming.Infra.Logs.Settings;
+using System.Reflection;
 
 namespace PredifyGaming.CrossCuting
 {
@@ -22,6 +23,11 @@ namespace PredifyGaming.CrossCuting
         public static void AddAutoMapperServicess(this WebApplicationBuilder builder)
         {
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        }
+        
+        public static void AddMediatRServices(this WebApplicationBuilder builder)
+        {
+            builder.Services.AddMediatR(x => x.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
         }
 
         public static void AddMongoDBServices(this WebApplicationBuilder builder)

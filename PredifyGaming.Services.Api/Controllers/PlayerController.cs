@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PredifyGaming.Application.Commands.Players;
 using PredifyGaming.Application.Interfaces;
+using PredifyGaming.Domain.Entities;
 
 namespace PredifyGaming.Services.Api.Controllers
 {
@@ -11,18 +12,18 @@ namespace PredifyGaming.Services.Api.Controllers
     {
         private readonly IPlayersAppService _appService;
 
-        public PlayerController(IPlayersAppService playerAppService)
+        public PlayerController(IPlayersAppService playerAppService, IMapper mapper)
         {
             _appService = playerAppService;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(PlayersDTO dto)
+        public async Task<IActionResult> Post(CreatePlayerCommand dto)
         {
             try
             {
-                var data = await _appService.CreateAsync(dto);
-                return Ok($@"Conta criada com sucesso ID:{data.Id}");
+                var data = await _appService.CreatePlayerAsync(dto);
+                return Ok($@"Conta criada com sucesso ID:{data.IdPlayer}");
             }
             catch (Exception ex)
             {
