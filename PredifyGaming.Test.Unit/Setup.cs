@@ -48,15 +48,16 @@ namespace PredifyGaming.Test.Unit
                 var root = configurationBuilder.Build();
                 var connectionString = root.GetSection("ConnectionStrings").GetSection("predifyConnection").Value;
 
+
                 //Injetando a connection string na classe SqlServerContext
                 services.AddDbContext<SqlContexts>(options => options.UseSqlServer(connectionString));
 
 
                 services.Configure<MongoDBSettings>(options =>
                 {
-                    options.Host = "mongodb://localhost:27017";
-                    options.Name = "Log_PlaysResult";
-                    options.IsSSL = false;
+                    options.Host = root.GetSection("MongoDBPredify").GetSection("Host").Value; ;
+                    options.Name = root.GetSection("MongoDBPredify").GetSection("Name").Value; ;
+                    options.IsSSL = root.GetSection("MongoDBPredify").GetValue<bool>("IsSSL");
                 });
 
                 services.AddSingleton<MongoDBContext>();
