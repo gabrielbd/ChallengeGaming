@@ -30,5 +30,20 @@ namespace PredifyGaming.Services.Api.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+
+        [HttpGet]
+        public  IActionResult Get(long idGame)
+        {
+            try
+            {
+                var data = _playsResultAppService.LeaderBoardFormat(idGame);
+                return Ok(data);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

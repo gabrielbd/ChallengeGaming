@@ -18,11 +18,11 @@ namespace PredifyGaming.Services.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(CreatePlayerCommand dto)
+        public async Task<IActionResult> Post(CreatePlayerCommand command)
         {
             try
             {
-                var data = await _appService.CreatePlayerAsync(dto);
+                var data = await _appService.CreatePlayerAsync(command);
                 return Ok($@"Conta criada com sucesso ID:{data.IdPlayer}");
             }
             catch (Exception ex)

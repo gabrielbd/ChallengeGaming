@@ -25,7 +25,6 @@ namespace PredifyGaming.Application.Mappings
                .ForMember(dest => dest.IdGame, opt => opt.MapFrom(src => src.Id));
             CreateMap<GameDTO, Games>()
                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-               .ForMember(dest => dest.DateTimeCreate, opt => opt.MapFrom(src => DateTime.UtcNow))
                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.IdGame));
 
 
@@ -41,7 +40,6 @@ namespace PredifyGaming.Application.Mappings
                 .ForMember(dest => dest.IdPlayer, opt => opt.MapFrom(src => src.Id));
             CreateMap<PlayerDTO, Players>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-                .ForMember(dest => dest.DateTimeCreate, opt => opt.MapFrom(src => DateTime.UtcNow))
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.IdPlayer));
 
 
@@ -60,7 +58,7 @@ namespace PredifyGaming.Application.Mappings
                 .ForMember(dest => dest.GameName, opt => opt.MapFrom(src => src.Games.Name))
                 .ForMember(dest => dest.PlayerName, opt => opt.MapFrom(src => src.Players.Name))
                 .ForMember(dest => dest.PointsResult, opt => opt.MapFrom(src => src.PointsResult))
-                .ForMember(dest => dest.TimeStamp, opt => opt.MapFrom(src => DateTime.UtcNow));
+                .ForMember(dest => dest.TimeStamp, opt => opt.MapFrom(src => src.TimeStamp));
 
 
 
@@ -68,10 +66,11 @@ namespace PredifyGaming.Application.Mappings
             CreateMap<PlaysResult, LogPlaysResultModel>()
                 .ForMember(dest => dest.PlayerId, opt => opt.MapFrom(src => src.PlayerId))
                 .ForMember(dest => dest.GameId, opt => opt.MapFrom(src => src.GameId))
-                .ForMember(dest => dest.TimeStamp, opt => opt.MapFrom(src => DateTime.UtcNow))
                 .ForMember(dest => dest.DescriptionGame, opt => opt.MapFrom(src => src.Games.Name))
                 .ForMember(dest => dest.DescriptionPlayer, opt => opt.MapFrom(src => src.Players.Name))
-                .ForMember(dest => dest.BalancePlayer, opt => opt.MapFrom(src => src.PointsResult));
+                .ForMember(dest => dest.BalancePlayer, opt => opt.MapFrom(src => src.PointsResult))
+                .ForMember(dest => dest.TimeStamp, opt => opt.MapFrom(src => DateTime.UtcNow))
+                .ForMember(dest => dest.Id, opt => opt.Ignore()); 
 
         }
     }

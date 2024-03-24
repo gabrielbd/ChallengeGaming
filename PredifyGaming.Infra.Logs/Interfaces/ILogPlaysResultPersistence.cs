@@ -10,6 +10,6 @@ namespace PredifyGaming.Infra.Logs.Interfaces
     public interface ILogPlaysResultPersistence
     {
         Task CreateAsync(LogPlaysResultModel entity);
-        Task<List<LogPlaysResultModel>> GetAllByIdGameAsync(long GameId);
+        List<LogPlaysResultModel> GetAllByIdGame(long GameId);
     }
 }

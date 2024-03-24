@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using PredifyGaming.Application.Commands.PlaysResult;
 using PredifyGaming.Application.Interfaces;
+using PredifyGaming.Application.Notifications;
 using PredifyGaming.Application.RequestHandlers;
 using PredifyGaming.Application.Services;
 using PredifyGaming.Domain.DTO;
@@ -17,8 +18,10 @@ namespace PredifyGaming.CrossCuting
     {
         public static void Register(IServiceCollection svcCollection)
         {
-
+            //MediatoR
             svcCollection.AddTransient<IRequestHandler<CreatePlayResultCommand, PlaysResultDTO>, PlaysResultRequestHandler>();
+            svcCollection.AddTransient<INotificationHandler<LogPlaysResultNotification>, LogPlaysResultNotificationHandler>();
+
 
             // Application
             svcCollection.AddTransient(typeof(IBaseAppService<>), typeof(BaseAppService<>));

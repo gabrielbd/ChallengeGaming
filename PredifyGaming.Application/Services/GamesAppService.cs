@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using PredifyGaming.Application.Commands.Games;
 using PredifyGaming.Application.Interfaces;
 using PredifyGaming.Domain.DTO;
@@ -21,6 +22,10 @@ namespace PredifyGaming.Application.Services
         public async Task<GameDTO> CreateGameAsync(CreateGameCommand command)
         {
             var map = _mapper.Map<Games>(command);
+
+            if (!map.Validate.IsValid)
+                throw new ValidationException(map.Validate.Errors);
+
             var addGameResult = await _domain.CreateAsync(map);
 
             var mapResult = _mapper.Map<GameDTO>(addGameResult);

@@ -20,9 +20,12 @@ namespace PredifyGaming.Infra.Mappings
                 .IsRequired()
                 .HasColumnName("nome")
                 .HasMaxLength(100);
+
             builder.Property(p => p.DateTimeCreate)
-                .IsRequired()
-                .HasColumnName("DataHoraCriacao");
+             .IsRequired()
+             .HasColumnName("DataHoraCriacao")
+             .ValueGeneratedOnAdd()
+             .HasDefaultValueSql("GETUTCDATE()");
 
         }
     }

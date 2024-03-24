@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PredifyGaming.Infra.Contexts;
 
@@ -11,9 +12,11 @@ using PredifyGaming.Infra.Contexts;
 namespace PredifyGaming.Infra.Migrations
 {
     [DbContext(typeof(SqlContexts))]
-    partial class SqlContextsModelSnapshot : ModelSnapshot
+    [Migration("20240324002255_Att-coluns")]
+    partial class Attcoluns
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

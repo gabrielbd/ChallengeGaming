@@ -18,18 +18,18 @@ namespace PredifyGaming.Services.Api.Controllers
             _appService = gamesAppService;
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> Post(GamesDTO dto)
-        //{
-        //    try
-        //    {
-        //        var data = await _appService.CreateAsync(dto);
-        //        return Ok($@"Game criado com sucesso ID:{data.Id}");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(ex.Message);
-        //    }
-        //}
+        [HttpPost]
+        public async Task<IActionResult> Post(CreateGameCommand command)
+        {
+            try
+            {
+                var data = await _appService.CreateGameAsync(command);
+                return Ok($@"Game criado com sucesso ID:{data.IdGame}");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

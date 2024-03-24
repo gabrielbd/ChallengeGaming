@@ -8,9 +8,6 @@ namespace PredifyGaming.Domain.Validations
     {
         public GamesValidation()
         {
-            RuleFor(u => u.Id)
-               .NotEmpty()
-               .WithMessage("Id é obrigatório");
 
             RuleFor(u => u.Name)
             .NotEmpty()

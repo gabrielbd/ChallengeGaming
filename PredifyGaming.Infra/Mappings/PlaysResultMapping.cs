@@ -26,6 +26,12 @@ namespace PredifyGaming.Infra.Mappings
                 .HasForeignKey(pr => pr.GameId)
                 .IsRequired();
 
+            builder.Property(p => p.TimeStamp)
+            .IsRequired()
+            .HasColumnName("DataHoraJogada")
+            .ValueGeneratedOnAdd()
+            .HasDefaultValueSql("GETUTCDATE()");
+
 
         }
     }

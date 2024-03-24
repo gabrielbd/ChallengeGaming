@@ -24,15 +24,15 @@ namespace PredifyGaming.Infra.Logs.Persistence
            await _mongoContext.LogPlaysResult.InsertOneAsync(entity);
         }
 
-        public async Task<List<LogPlaysResultModel>> GetAllByIdGameAsync(long GameId)
+        public List<LogPlaysResultModel> GetAllByIdGame(long GameId)
         {
             var filter = Builders<LogPlaysResultModel>.Filter
                 .Eq(log => log.GameId,GameId);
 
-            return await _mongoContext
+            return _mongoContext
                 .LogPlaysResult
                 .Find(filter)
-                .ToListAsync();
+                .ToList();
         }
     }
 }

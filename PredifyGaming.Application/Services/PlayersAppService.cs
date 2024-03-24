@@ -22,8 +22,11 @@ namespace PredifyGaming.Application.Services
         public async Task<PlayerDTO> CreatePlayerAsync(CreatePlayerCommand command)
         {
             var map = _mapper.Map<Players>(command);
-            var addPlayerResult = await _domain.CreateAsync(map);
 
+            if (!map.Validate.IsValid)
+                throw new ValidationException(map.Validate.Errors);
+
+            var addPlayerResult = await _domain.CreateAsync(map);
             var mapResult = _mapper.Map<PlayerDTO>(addPlayerResult);
 
             return mapResult;
