@@ -21,15 +21,9 @@ namespace PredifyGaming.Services.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(CreateGameCommand command)
         {
-            try
-            {
+
                 var data = await _appService.CreateGameAsync(command);
                 return Ok($@"Game criado com sucesso ID:{data.IdGame}");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
         }
     }
 }

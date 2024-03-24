@@ -18,32 +18,17 @@ namespace PredifyGaming.Services.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(CreatePlayResultCommand command)
         {
-            try
-            {
                 var data = await _playsResultAppService.CreatePlayAsync(command);
                 var gameplayResult = await _playsResultAppService.GameResultFormat(data);
-
                 return Ok(gameplayResult);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
         }
 
 
         [HttpGet]
         public  IActionResult Get(long idGame)
         {
-            try
-            {
                 var data = _playsResultAppService.LeaderBoardFormat(idGame);
                 return Ok(data);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
         }
     }
 }
