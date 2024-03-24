@@ -15,11 +15,11 @@ SetupIOC.AddMongoDBServices(builder);
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+
+ app.UseSwagger();
+ app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API-Prediffy-Gaming v1"));
+
+
 app.UseMiddleware<ExceptionMiddleware>();
 app.UseAuthorization();
 

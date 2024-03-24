@@ -14,7 +14,7 @@ namespace PredifyGaming.Infra.Contexts
         public SqlContexts CreateDbContext(string[] args)
         {
             var config = new ConfigurationBuilder();
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json");
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.Infra.json");
             config.AddJsonFile(path, false);
 
             var root = config.Build();

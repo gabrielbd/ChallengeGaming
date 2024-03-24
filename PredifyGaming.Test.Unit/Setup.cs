@@ -42,7 +42,7 @@ namespace PredifyGaming.Test.Unit
                 //config banco de teste unit
 
                 var configurationBuilder = new ConfigurationBuilder();
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json");
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.Infra.json");
                 configurationBuilder.AddJsonFile(path, false);
 
                 var root = configurationBuilder.Build();
