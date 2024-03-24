@@ -3,6 +3,7 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
 using PredifyGaming.Application.Commands.PlaysResult;
+using PredifyGaming.Domain.Entities;
 using System.Net;
 using System.Text;
 using Xunit;
@@ -15,10 +16,10 @@ namespace PredifyGaming.Test.Integration
         [Fact]
         public async Task TestCreatedPlays()
         {
-            var dto = new PlaysResultDTO
+            var dto = new CreatePlayResultCommand
             {
-                PlayerId = 1,
-                GameId = 2,
+                PlayerId = 170241,
+                GameId = 120240,
             };
 
             var content = new StringContent(JsonConvert.SerializeObject(dto),
@@ -30,6 +31,25 @@ namespace PredifyGaming.Test.Integration
             result.StatusCode
                 .Should()
                 .Be(HttpStatusCode.OK);
+        }
+
+        [Fact]
+        public async Task TestGetLeaderBoardFormat()
+        {
+            long idGame = 120240; 
+            var result = await new WebApplicationFactory<Program>()
+                     .CreateClient().GetAsync($"/api/Plays?idGame={idGame}");
+
+            result.StatusCode
+                .Should()
+                .Be(HttpStatusCode.OK);
+
+            var contentString = await result.Content.ReadAsStringAsync();
+
+
+            contentString.Should().NotBeNullOrEmpty();
+            contentString.Should().Contain("Ranking");
+
         }
     }
 }

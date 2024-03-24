@@ -17,7 +17,7 @@ namespace PredifyGaming.Test.Integration
         {
             var faker = new Faker("pt_BR");
 
-            var dto = new PlayersDTO
+            var dto = new CreatePlayerCommand
             {
                 Name = faker.Person.FullName,
             };
