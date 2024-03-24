@@ -21,7 +21,7 @@ namespace PredifyGaming.Test.Unit.AppServices
         [Fact]
         public async Task TestGetAllAsync()
         {
-            var dto = new PlayersDTO
+            var dto = new Players
             {
                 Name = "PLAYERS TEST"
             };
@@ -37,7 +37,7 @@ namespace PredifyGaming.Test.Unit.AppServices
         [Fact]
         public async Task TestCreateAsync()
         {
-            var dto = new PlayersDTO
+            var dto = new Players
             {
                 Name = "PLAYERS TEST"
             };
@@ -52,7 +52,7 @@ namespace PredifyGaming.Test.Unit.AppServices
         [Fact]
         public async Task TestUpdateAsync()
         {
-            var dto = new PlayersDTO
+            var dto = new Players
             {
                 Name = "PLAYERS TEST"
             };
@@ -69,7 +69,7 @@ namespace PredifyGaming.Test.Unit.AppServices
         [Fact]
         public async Task TestDeletAsync()
         {
-            var dto = new PlayersDTO
+            var dto = new Players
             {
                 Name = "PLAYERS TEST"
             };
@@ -83,7 +83,7 @@ namespace PredifyGaming.Test.Unit.AppServices
         [Fact]
         public async Task TestByIdAsync()
         {
-            var dto = new PlayersDTO
+            var dto = new Players
             {
                 Name = "PLAYERS TEST" 
             };

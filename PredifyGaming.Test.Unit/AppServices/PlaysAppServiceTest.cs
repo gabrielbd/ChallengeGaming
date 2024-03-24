@@ -1,16 +1,8 @@
-﻿using AutoMapper;
-using Bogus;
+﻿using Bogus;
 using FluentAssertions;
-using PredifyGaming.Application.Commands.Games;
-using PredifyGaming.Application.Commands.Players;
-using PredifyGaming.Application.Commands.PlaysResult;
 using PredifyGaming.Application.Interfaces;
 using PredifyGaming.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PredifyGaming.Infra.Logs.Interfaces;
 using Xunit;
 
 namespace PredifyGaming.Test.Unit.AppServices
@@ -20,14 +12,53 @@ namespace PredifyGaming.Test.Unit.AppServices
         private readonly IGamesAppService _gamesAppService;
         private readonly IPlayersAppService _playersAppService;
         private readonly IPlaysResultAppService _playsResultAppService;
-        private readonly IMapper _mapper;
 
-        public PlaysAppServiceTest(IGamesAppService gamesAppService, IPlayersAppService playersAppService, IPlaysResultAppService playsResultAppService, IMapper mapper)
+
+        public PlaysAppServiceTest(IGamesAppService gamesAppService, IPlayersAppService playersAppService, IPlaysResultAppService playsResultAppService, ILogPlaysResultPersistence logPlaysResultPersistence)
         {
             _gamesAppService = gamesAppService;
             _playersAppService = playersAppService;
             _playsResultAppService = playsResultAppService;
-            _mapper = mapper;
+        }
+
+        [Fact]
+        public async Task GetByPlayerIsGameAsync()
+        {
+            var play = await GenerationPlayFake();
+            var playById = await _playsResultAppService.GetByPlayerIsGameAsync(play.PlayerId, play.GameId);
+            playById.Should().NotBeNull(); ;
+
+            await _playsResultAppService.DeleteAsync(play.Id);
+        }
+
+        [Fact]
+        public async Task TestGetAllByGameAsync()
+        {
+            var play = await GenerationPlayFake();
+            var playById = await _playsResultAppService.GetAllByGameAsync(play.GameId);
+            playById.Should().NotBeNull(); ;
+
+            await _playsResultAppService.DeleteAsync(play.Id);
+        }
+
+        [Fact]
+        public async Task GetAllByPlayerAsync()
+        {
+            var play = await GenerationPlayFake();
+            var playerById = await _playsResultAppService.GetAllByGameAsync(play.PlayerId);
+            playerById.Should().NotBeNull(); ;
+
+            await _playsResultAppService.DeleteAsync(play.Id);
+        }
+
+        [Fact]
+        public async Task TestGetAllAsync()
+        {
+            var play = await GenerationPlayFake();
+            var playAll = await _playsResultAppService.GetAllAsync();
+            playAll.FirstOrDefault(g => g.GameId == play.GameId).Should().NotBeNull();
+
+            await _playsResultAppService.DeleteAsync(play.Id);
         }
 
         [Fact]
@@ -48,8 +79,7 @@ namespace PredifyGaming.Test.Unit.AppServices
             var play = await GenerationPlayFake();
             play.PointsResult = 123;
 
-            var dto = _mapper.Map<PlaysResultDTO>(play);
-            var playResultUpdate = await _playsResultAppService.UpdateAsync(dto);
+            var playResultUpdate = await _playsResultAppService.UpdateAsync(play);
 
             var playById = await _playsResultAppService.GetByIdAsync(playResultUpdate.Id);
             playById.Should().NotBeNull();
@@ -83,20 +113,20 @@ namespace PredifyGaming.Test.Unit.AppServices
         private async Task<PlaysResult> GenerationPlayFake()
         {
             var faker = new Faker("pt_BR");
-            var game = new GamesDTO
+            var game = new Games
             {
                 Name = faker.Company.ToString()
             };
             var gameFake = await _gamesAppService.CreateAsync(game);
 
 
-            var player = new PlayersDTO
+            var player = new Players
             {
                 Name = faker.Person.FullName
             };
             var playerFake = await _playersAppService.CreateAsync(player);
 
-            var play = new PlaysResultDTO
+            var play = new PlaysResult
             {
                 PlayerId = playerFake.Id,
                 GameId = gameFake.Id,

@@ -25,11 +25,7 @@ namespace PredifyGaming.Test.Unit.AppServices
         [Fact]
         public async Task TestGetAllAsync()
         {
-            var dto = new GamesDTO
-            {
-                Name = "GAME TEST"
-            };
-            var game = await _gamesAppService.CreateAsync(dto);
+            var game = await GenerationGameFake();
 
             var gameAll = await _gamesAppService.GetAllAsync();
             gameAll.FirstOrDefault(g => g.Id == game.Id).Should().NotBeNull();
@@ -41,11 +37,7 @@ namespace PredifyGaming.Test.Unit.AppServices
         [Fact]
         public async Task TestCreateAsync()
         {
-            var dto = new GamesDTO
-            {
-                Name = "GAME TEST"
-            };
-            var game = await _gamesAppService.CreateAsync(dto);
+            var game = await GenerationGameFake();
 
             var gameById = await _gamesAppService.GetByIdAsync(game.Id);
             gameById.Should().NotBeNull();
@@ -56,13 +48,10 @@ namespace PredifyGaming.Test.Unit.AppServices
         [Fact]
         public async Task TestUpdateAsync()
         {
-            var dto = new GamesDTO
-            {
-                Name = "GAME TEST"
-            };
-            var game = await _gamesAppService.CreateAsync(dto);
-            dto.Name = "GAME TEST UPDATE";
-            await _gamesAppService.UpdateAsync(dto);
+            var game = await GenerationGameFake();
+
+            game.Name = "GAME TEST UPDATE";
+            await _gamesAppService.UpdateAsync(game);
 
             var gameById = await _gamesAppService.GetByIdAsync(game.Id);
             gameById.Should().NotBeNull();
@@ -73,11 +62,8 @@ namespace PredifyGaming.Test.Unit.AppServices
         [Fact]
         public async Task TestDeletAsync()
         {
-            var dto = new GamesDTO
-            {
-                Name = "GAME TEST"
-            };
-            var game = await _gamesAppService.CreateAsync(dto);
+            var game = await GenerationGameFake();
+
             await _gamesAppService.DeleteAsync(game.Id);
 
             var gameById = await _gamesAppService.GetByIdAsync(game.Id);
@@ -88,16 +74,23 @@ namespace PredifyGaming.Test.Unit.AppServices
         [Fact]
         public async Task TestByIdAsync()
         {
-            var dto = new GamesDTO
-            {
-                Name = "GAME TEST"
-            };
-            var game = await _gamesAppService.CreateAsync(dto);
+            var game = await GenerationGameFake();
+
             var gameById = await _gamesAppService.GetByIdAsync(game.Id);
             gameById.Should().NotBeNull();
 
             await _gamesAppService.DeleteAsync(game.Id);
 
+        }
+
+        private async Task<Games> GenerationGameFake()
+        {
+            var game = new Games
+            {
+                Name = "GAME TEST"
+            };
+            await _gamesAppService.CreateAsync(game);
+            return game;
         }
 
 

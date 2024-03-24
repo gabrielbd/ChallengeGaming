@@ -1,44 +1,37 @@
-﻿using Bogus;
-using FluentAssertions;
+﻿using FluentAssertions;
 using PredifyGaming.Domain.Entities;
 using PredifyGaming.Domain.Interfaces.Repositories;
-using PredifyGaming.Infra.Repositories;
 using Xunit;
 
 namespace PredifyGaming.Test.Unit.Repositories
 {
     public class PlayersRepositoryTest 
     {
-        private readonly IPlayersRepository _playersRepository;
+        private readonly IUnitOfWork<Players> _unitOfWork;
 
-        public PlayersRepositoryTest(IPlayersRepository playersRepository)
+        public PlayersRepositoryTest(IUnitOfWork<Players> unitOfWork)
         {
-            _playersRepository = playersRepository;
+            _unitOfWork = unitOfWork;
         }
 
         [Fact]
         public async Task TestGetAllAsync()
         {
-            var player = new Players
-            {
-                Name = "Player TEST"
-            };
-            await _playersRepository.CreateAsync(player);
-
-            var playerAll = await _playersRepository.GetAllAsync();
+            var player = await GenerationPlayerFake();
+            var playerAll = await _unitOfWork.PlayersRepository.GetAllAsync();
             playerAll.FirstOrDefault(g => g.Id == player.Id).Should().NotBeNull();
 
-            await _playersRepository.DeleteAsync(player.Id);
+            await _unitOfWork.PlayersRepository.DeleteAsync(player.Id);
         }
 
         [Fact]
         public async Task TestCreateAsync()
         {
             var player = await GenerationPlayerFake();
-            var playerById = await _playersRepository.GetByIdAsync(player.Id);
+            var playerById = await _unitOfWork.PlayersRepository.GetByIdAsync(player.Id);
             playerById.Should().NotBeNull();
 
-            await _playersRepository.DeleteAsync(player.Id);
+            await _unitOfWork.PlayersRepository.DeleteAsync(player.Id);
 
         }
 
@@ -48,20 +41,20 @@ namespace PredifyGaming.Test.Unit.Repositories
             var player = await GenerationPlayerFake();
             player.Name = "NAME PLAYERS TEST";
 
-            await _playersRepository.UpdateAsync(player);
-            var playerById = await _playersRepository.GetByIdAsync(player.Id);
+            await _unitOfWork.PlayersRepository.UpdateAsync(player);
+            var playerById = await _unitOfWork.PlayersRepository.GetByIdAsync(player.Id);
             playerById.Should().NotBeNull();
 
-            await _playersRepository.DeleteAsync(player.Id);
+            await _unitOfWork.PlayersRepository.DeleteAsync(player.Id);
         }
 
         [Fact]
         public async Task TestDeletAsync()
         {
             var player = await GenerationPlayerFake();
-            await _playersRepository.DeleteAsync(player.Id);
+            await _unitOfWork.PlayersRepository.DeleteAsync(player.Id);
 
-            var playerById = await _playersRepository.GetByIdAsync(player.Id);
+            var playerById = await _unitOfWork.PlayersRepository.GetByIdAsync(player.Id);
             playerById.Should().BeNull();
 
         }
@@ -70,10 +63,10 @@ namespace PredifyGaming.Test.Unit.Repositories
         public async Task TestByIdAsync()
         {
             var player = await GenerationPlayerFake();
-            var playerById = await _playersRepository.GetByIdAsync(player.Id);
+            var playerById = await _unitOfWork.PlayersRepository.GetByIdAsync(player.Id);
             playerById.Should().NotBeNull();
 
-            await _playersRepository.DeleteAsync(player.Id);
+            await _unitOfWork.PlayersRepository.DeleteAsync(player.Id);
 
         }
 
@@ -83,7 +76,7 @@ namespace PredifyGaming.Test.Unit.Repositories
             {
                 Name = "PLAYER TEST"
             };
-            await _playersRepository.CreateAsync(player);
+            await _unitOfWork.PlayersRepository.CreateAsync(player);
             return player;
         }
 

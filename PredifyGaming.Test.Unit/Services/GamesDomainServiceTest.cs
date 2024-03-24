@@ -1,37 +1,28 @@
 ﻿using FluentAssertions;
 using PredifyGaming.Domain.Entities;
+using PredifyGaming.Domain.Interfaces.Repositories;
 using PredifyGaming.Domain.Interfaces.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace PredifyGaming.Test.Unit.Services
 {
     public class GamesDomainServiceTest
     {
-        private readonly IGamesDomainService _gamesDomainService;
+        private readonly IUnitOfWork<Games> _unitOfWork;
 
-        public GamesDomainServiceTest(IGamesDomainService gamesDomainService)
+        public GamesDomainServiceTest(IUnitOfWork<Games> unitOfWork)
         {
-            _gamesDomainService = gamesDomainService;
+            _unitOfWork = unitOfWork;
         }
 
         [Fact]
         public async Task TestGetAllAsync()
         {
-            var game = new Games
-            {
-                Name = "GAME TEST"
-            };
-            await _gamesDomainService.CreateAsync(game);
-
-            var gameAll = await _gamesDomainService.GetAllAsync();
+            var game = await GenerationGameFake();
+            var gameAll = await _unitOfWork.GamesRepository.GetAllAsync();
             gameAll.FirstOrDefault(g => g.Id == game.Id).Should().NotBeNull();
 
-            await _gamesDomainService.DeleteAsync(game.Id);
+            await _unitOfWork.GamesRepository.DeleteAsync(game.Id);
 
         }
 
@@ -39,10 +30,10 @@ namespace PredifyGaming.Test.Unit.Services
         public async Task TestCreateAsync()
         {
             var game = await GenerationGameFake();
-            var gameById = await _gamesDomainService.GetByIdAsync(game.Id);
+            var gameById = await _unitOfWork.GamesRepository.GetByIdAsync(game.Id);
             gameById.Should().NotBeNull();
 
-            await _gamesDomainService.DeleteAsync(game.Id);
+            await _unitOfWork.GamesRepository.DeleteAsync(game.Id);
         }
 
         [Fact]
@@ -51,11 +42,11 @@ namespace PredifyGaming.Test.Unit.Services
             var game = await GenerationGameFake();
             game.Name = "NAME GAME TEST";
 
-            await _gamesDomainService.UpdateAsync(game);
-            var gameById = await _gamesDomainService.GetByIdAsync(game.Id);
+            await _unitOfWork.GamesRepository.UpdateAsync(game);
+            var gameById = await _unitOfWork.GamesRepository.GetByIdAsync(game.Id);
             gameById.Should().NotBeNull();
 
-            await _gamesDomainService.DeleteAsync(game.Id);
+            await _unitOfWork.GamesRepository.DeleteAsync(game.Id);
 
         }
 
@@ -63,9 +54,9 @@ namespace PredifyGaming.Test.Unit.Services
         public async Task TestDeletAsync()
         {
             var game = await GenerationGameFake();
-            await _gamesDomainService.DeleteAsync(game.Id);
+            await _unitOfWork.GamesRepository.DeleteAsync(game.Id);
 
-            var gameById = await _gamesDomainService.GetByIdAsync(game.Id);
+            var gameById = await _unitOfWork.GamesRepository.GetByIdAsync(game.Id);
             gameById.Should().BeNull();
 
         }
@@ -75,10 +66,10 @@ namespace PredifyGaming.Test.Unit.Services
         public async Task TestByIdAsync()
         {
             var game = await GenerationGameFake();
-            var gameById = await _gamesDomainService.GetByIdAsync(game.Id);
+            var gameById = await _unitOfWork.GamesRepository.GetByIdAsync(game.Id);
             gameById.Should().NotBeNull();
 
-            await _gamesDomainService.DeleteAsync(game.Id);
+            await _unitOfWork.GamesRepository.DeleteAsync(game.Id);
 
         }
 
@@ -89,7 +80,7 @@ namespace PredifyGaming.Test.Unit.Services
             {
                 Name = "GAME TEST"
             };
-            await _gamesDomainService.CreateAsync(game);
+            await _unitOfWork.GamesRepository.CreateAsync(game);
             return game;
         }
     }
