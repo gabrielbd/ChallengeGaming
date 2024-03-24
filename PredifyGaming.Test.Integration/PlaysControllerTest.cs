@@ -18,8 +18,8 @@ namespace PredifyGaming.Test.Integration
         {
             var dto = new CreatePlayResultCommand
             {
-                PlayerId = 170241,
-                GameId = 120240,
+                PlayerId = 1,
+                GameId = 1,
             };
 
             var content = new StringContent(JsonConvert.SerializeObject(dto),
@@ -36,7 +36,7 @@ namespace PredifyGaming.Test.Integration
         [Fact]
         public async Task TestGetLeaderBoardFormat()
         {
-            long idGame = 120240; 
+            long idGame = 1; 
             var result = await new WebApplicationFactory<Program>()
                      .CreateClient().GetAsync($"/api/Plays?idGame={idGame}");
 
