@@ -1,13 +1,7 @@
 ﻿using AutoMapper;
 using FluentAssertions;
-using PredifyGaming.Application.Commands.Games;
 using PredifyGaming.Application.Interfaces;
 using PredifyGaming.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace PredifyGaming.Test.Unit.AppServices

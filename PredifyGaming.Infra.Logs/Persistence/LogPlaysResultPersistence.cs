@@ -2,11 +2,6 @@
 using PredifyGaming.Infra.Logs.Contexts;
 using PredifyGaming.Infra.Logs.Interfaces;
 using PredifyGaming.Infra.Logs.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PredifyGaming.Infra.Logs.Persistence
 {

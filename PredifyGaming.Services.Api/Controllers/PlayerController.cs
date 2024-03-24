@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using PredifyGaming.Application.Commands.Players;
 using PredifyGaming.Application.Interfaces;
-using PredifyGaming.Domain.Entities;
 
 namespace PredifyGaming.Services.Api.Controllers
 {

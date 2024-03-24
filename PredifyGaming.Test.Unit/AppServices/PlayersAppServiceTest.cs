@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using FluentAssertions;
-using PredifyGaming.Application.Commands.Players;
 using PredifyGaming.Application.Interfaces;
 using PredifyGaming.Domain.Entities;
 using Xunit;

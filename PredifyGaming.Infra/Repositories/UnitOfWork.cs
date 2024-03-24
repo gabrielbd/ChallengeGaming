@@ -1,9 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
+﻿using Microsoft.EntityFrameworkCore.Storage;
 using PredifyGaming.Domain.Interfaces.Repositories;
 using PredifyGaming.Infra.Contexts;
-using System;
-using System.Threading.Tasks;
+
 
 namespace PredifyGaming.Infra.Repositories
 {

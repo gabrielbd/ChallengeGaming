@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 using PredifyGaming.Domain.Entities;
 using PredifyGaming.Domain.Interfaces.Repositories;
-using PredifyGaming.Domain.Interfaces.Services;
 using Xunit;
 
 namespace PredifyGaming.Test.Unit.Services

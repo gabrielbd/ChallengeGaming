@@ -1,5 +1,4 @@
-﻿using Bogus;
-using FluentAssertions;
+﻿using FluentAssertions;
 using PredifyGaming.Domain.Entities;
 using PredifyGaming.Domain.Interfaces.Repositories;
 using Xunit;

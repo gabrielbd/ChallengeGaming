@@ -1,9 +1,7 @@
-﻿using Bogus;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
 using PredifyGaming.Application.Commands.PlaysResult;
-using PredifyGaming.Domain.Entities;
 using System.Net;
 using System.Text;
 using Xunit;

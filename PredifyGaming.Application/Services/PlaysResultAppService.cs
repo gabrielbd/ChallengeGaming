@@ -8,7 +8,6 @@ using PredifyGaming.Domain.Entities;
 using PredifyGaming.Domain.Interfaces.Services;
 using PredifyGaming.Infra.Logs.Interfaces;
 using PredifyGaming.Infra.Logs.Models;
-using System.Globalization;
 using System.Text;
 
 

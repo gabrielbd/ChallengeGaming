@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using PredifyGaming.Domain.Entities;
 using PredifyGaming.Infra.Mappings;
 

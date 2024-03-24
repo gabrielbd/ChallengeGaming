@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
 using PredifyGaming.Application.Interfaces;
-using PredifyGaming.Domain.Entities;
 using PredifyGaming.Domain.Interfaces.Services;
 
 
