@@ -16,7 +16,12 @@ Para instalar e começar a usar, siga os passos abaixo:
 # Serviços disponiveis
 Atualmente, em nosso projeto, temos 4 serviços disponíveis para uso:
 
-- /api/Gamer - POST - Serviço para criar um GAMER
 - /api/Player - POST - Serviço para criar um PLAYER
 - /api/Plays(POST)(idGame/idPlayer) - Serviço responsavel para realizar suas jogadas.
-- /api/Plays(GET)(idGame) - Serviço retorna o TOP 100 players em relação a pontuação do game selecionado. 
+- /api/Plays(GET)(idGame) - Serviço retorna o TOP 100 players em relação a pontuação do game selecionado.
+
+#  Atualmente nossa empresa tem 4 games disponíveis, segue abaixo eles.
+  *    PREDIFY - MMORPG    id = 4
+  *    PREDIFY - MOBA          id = 5
+  *    PREDIFY - FPS             id = 6
+  *    PREDIFY - NFT             id = 7
